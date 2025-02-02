@@ -2,6 +2,10 @@ package grupospring.bibliotecaspring.Modelo;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,9 +17,17 @@ import java.util.List;
 public class Libro {
     @Id
     @Column(name = "isbn", nullable = false, length = 20)
+    @NotBlank(message = "Este campo no puede estar vacío")
+    @NotEmpty(message = "Este campo no puede estar vacío")
+    @NotNull(message = "Este campo no puede estar vacio")
+    @Pattern(regexp = "^\\d{3}-\\d-\\d{3}-\\d{5}-\\d$", message = "El codigo isbn tiene que tener una estructura como la siguiente 978-0-596-52068-7")
     private String isbn;
 
     @Column(name = "titulo", nullable = false, length = 200)
+    @NotBlank(message = "Este campo no puede estar vacío")
+    @NotEmpty(message = "Este campo no puede estar vacío")
+    @NotNull(message = "Este campo no puede estar vacio")
+    @Pattern(regexp = "^[a-zA-Z0-9]{1,200}$", message = "El titulo debe de tener una longitud maxima de 200 y solo puede contener caracteres alfanumericos")
     private String titulo;
 
     @Column(name = "autor", nullable = false, length = 100)

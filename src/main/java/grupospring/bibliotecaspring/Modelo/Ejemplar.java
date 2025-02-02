@@ -3,6 +3,7 @@ package grupospring.bibliotecaspring.Modelo;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -30,6 +31,7 @@ public class Ejemplar {
     @Lob
     @Column(name = "estado")
     private String estado;
+    @Pattern(regexp = "^(Disponible|Prestado|Dañado)$", message = "Estado no valido")
 
     @OneToMany(mappedBy = "ejemplar")
     @JsonManagedReference("ejemplar-prestamo")
