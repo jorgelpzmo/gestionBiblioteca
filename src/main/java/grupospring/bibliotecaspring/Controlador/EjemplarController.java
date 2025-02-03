@@ -61,8 +61,8 @@ public class EjemplarController {
         return ResponseEntity.ok(ejemplar);
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestParam Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
         this.ejemplarRepository.deleteById(id);
         return null;
     }
