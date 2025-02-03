@@ -1,6 +1,5 @@
 package grupospring.bibliotecaspring.Modelo;
 
-import grupospring.bibliotecaspring.Modelo.Usuario;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

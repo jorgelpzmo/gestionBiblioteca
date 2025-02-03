@@ -1,4 +1,4 @@
-package Controlador;
+package grupospring.bibliotecaspring.Controlador;
 
 import grupospring.bibliotecaspring.Modelo.Usuario;
 import grupospring.bibliotecaspring.Modelo.UserRepository;

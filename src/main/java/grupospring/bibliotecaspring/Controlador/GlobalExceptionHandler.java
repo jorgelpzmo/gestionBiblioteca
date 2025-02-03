@@ -1,4 +1,4 @@
-package Controlador;
+package grupospring.bibliotecaspring.Controlador;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

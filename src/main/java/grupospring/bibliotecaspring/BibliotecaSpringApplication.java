@@ -1,13 +1,10 @@
-package grupospring.bibliotecaspring.Modelo;
+package grupospring.bibliotecaspring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "Controlador")
 @EnableCaching
 public class BibliotecaSpringApplication {
 

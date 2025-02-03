@@ -1,9 +1,7 @@
-package Controlador;
+package grupospring.bibliotecaspring.Controlador;
 
-import grupospring.bibliotecaspring.Modelo.BookRepository;
-import grupospring.bibliotecaspring.Modelo.Ejemplar;
-import grupospring.bibliotecaspring.Modelo.EjemplarRepository;
-import grupospring.bibliotecaspring.Modelo.Libro;
+
+import grupospring.bibliotecaspring.Modelo.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -12,19 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.regex.Pattern;
-
 @Validated
 @RestController
 @RequestMapping("/ejemplares")
 @CacheConfig(cacheNames = {"ejemplares"})
 public class EjemplarController {
     EjemplarRepository ejemplarRepository;
+    BookRepository bookRepository;
     public EjemplarController() {}
 
     @Autowired
-    public EjemplarController(EjemplarRepository ejemplarRepository) {
+    public EjemplarController(EjemplarRepository ejemplarRepository, BookRepository bookRepository) {
         this.ejemplarRepository = ejemplarRepository;
+        this.bookRepository = bookRepository;
     }
 
     @GetMapping
@@ -46,7 +44,11 @@ public class EjemplarController {
 
     @Validated
     @PostMapping
-    public ResponseEntity<Ejemplar> add(@Valid @RequestBody Ejemplar ejemplar) {
+    public ResponseEntity<Ejemplar> add(@Valid @RequestBody EjemplarDTO ejemplarDTO) {
+        Libro libro = this.bookRepository.findById(ejemplarDTO.getIsbn())
+                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
+
+        Ejemplar ejemplar = new Ejemplar(libro, ejemplarDTO.getEstado());
         this.ejemplarRepository.save(ejemplar);
         return ResponseEntity.ok(ejemplar);
     }
