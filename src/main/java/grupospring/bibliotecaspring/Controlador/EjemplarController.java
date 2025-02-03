@@ -42,14 +42,28 @@ public class EjemplarController {
             }
     }
 
-    @Validated
+
     @PostMapping
     public ResponseEntity<Ejemplar> add(@Valid @RequestBody EjemplarDTO ejemplarDTO) {
-        Libro libro = this.bookRepository.findById(ejemplarDTO.getIsbn())
-                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
-
+        Libro libro = this.bookRepository.findById(ejemplarDTO.getIsbn()).orElseThrow();
         Ejemplar ejemplar = new Ejemplar(libro, ejemplarDTO.getEstado());
         this.ejemplarRepository.save(ejemplar);
         return ResponseEntity.ok(ejemplar);
+    }
+
+    @PutMapping
+    public ResponseEntity<Ejemplar> update(@Valid @RequestBody EjemplarDTO ejemplarDTO) {
+        Libro libro = this.bookRepository.findById(ejemplarDTO.getIsbn()).orElseThrow();
+        Ejemplar ejemplar = this.ejemplarRepository.findById(ejemplarDTO.getId()).orElseThrow();
+        ejemplar.setEstado(ejemplarDTO.getEstado());
+        ejemplar.setLibro(libro);
+        this.ejemplarRepository.save(ejemplar);
+        return ResponseEntity.ok(ejemplar);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> delete(@RequestParam Integer id) {
+        this.ejemplarRepository.deleteById(id);
+        return null;
     }
 }
